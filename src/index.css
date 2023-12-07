@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form {
+    @apply text-lime-50 flex w-[100%]  items-center justify-center flex-col gap-4;
+  }
+  form {
+    @apply border border-white p-4 rounded-xl  flex flex-col gap-4;
+  }
+  label {
+    @apply cursor-pointer;
+  }
+  input {
+    @apply rounded-lg bg-black border border-white text-white p-2;
+  }
+  button {
+    @apply bg-pink-700  p-2 rounded-lg;
+  }
+}
