@@ -1,5 +1,12 @@
-import { FieldErrors, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  FieldErrors,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
+import { useEffect } from "react";
 type FormValues = {
   email: string;
   username: string;
@@ -35,10 +42,28 @@ const YouTubeForm = () => {
       };
     },
   });
-  const { register, control, handleSubmit, formState, getValues, setValue } =
-    form;
-  const { errors,dirtyFields,touchedFields,isDirty,isValid } = formState;
-console.log({dirtyFields,touchedFields,isDirty,isValid});
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState,
+    getValues,
+    setValue,
+    reset,
+  } = form;
+  const {
+    errors,
+    dirtyFields,
+    touchedFields,
+    isDirty,
+    isValid,
+    isSubmitting,
+    isSubmitted,
+    isSubmitSuccessful,
+    submitCount,
+  } = formState;
+  // console.log({ dirtyFields, touchedFields, isDirty, isValid });
+  console.log({ isSubmitting, isSubmitted, isSubmitSuccessful, submitCount });
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
@@ -61,13 +86,15 @@ console.log({dirtyFields,touchedFields,isDirty,isValid});
     });
   };
 
-  const onError =(errors:FieldErrors<FormValues>)=>{
-    console.log(errors)
-  }
-
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log(errors);
+  };
+  useEffect(() => {
+    isSubmitSuccessful && reset();
+  }, [isSubmitSuccessful, reset]);
   return (
     <div className="form">
-      <form onSubmit={handleSubmit(onSubmit,onError)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit, onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input
@@ -243,7 +270,21 @@ console.log({dirtyFields,touchedFields,isDirty,isValid});
         </div>
 
         <div className="flex justify-around">
-          <button disabled={!isDirty||!isValid} className={!isDirty ||!isValid?"cursor-not-allowed":""}>Submit</button>
+          <button
+            disabled={!isDirty || !isValid || isSubmitting}
+            className={
+              !isDirty || !isValid || isSubmitting ? "cursor-not-allowed" : ""
+            }
+          >
+            Submit
+          </button>
+          <button
+            disabled={!isDirty}
+            className={!isDirty ? "cursor-not-allowed" : ""}
+            onClick={() => reset()}
+          >
+            Reset
+          </button>
           <button onClick={handleGetValues}>Get values</button>
           <button onClick={handleSetValue}>Set Value</button>
         </div>
