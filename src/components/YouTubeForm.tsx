@@ -1,4 +1,4 @@
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { FieldErrors, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { DevTool } from "@hookform/devtools";
 type FormValues = {
   email: string;
@@ -37,8 +37,8 @@ const YouTubeForm = () => {
   });
   const { register, control, handleSubmit, formState, getValues, setValue } =
     form;
-  const { errors,dirtyFields,touchedFields,isDirty } = formState;
-console.log({dirtyFields,touchedFields,isDirty});
+  const { errors,dirtyFields,touchedFields,isDirty,isValid } = formState;
+console.log({dirtyFields,touchedFields,isDirty,isValid});
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
@@ -61,10 +61,13 @@ console.log({dirtyFields,touchedFields,isDirty});
     });
   };
 
+  const onError =(errors:FieldErrors<FormValues>)=>{
+    console.log(errors)
+  }
+
   return (
     <div className="form">
-      <h2 className=" font-bold text-3xl">YouTube Form </h2>
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
+      <form onSubmit={handleSubmit(onSubmit,onError)} noValidate>
         <div className="form-control">
           <label htmlFor="username">Username</label>
           <input
@@ -240,7 +243,7 @@ console.log({dirtyFields,touchedFields,isDirty});
         </div>
 
         <div className="flex justify-around">
-          <button>Submit</button>
+          <button disabled={!isDirty||!isValid} className={!isDirty ||!isValid?"cursor-not-allowed":""}>Submit</button>
           <button onClick={handleGetValues}>Get values</button>
           <button onClick={handleSetValue}>Set Value</button>
         </div>
