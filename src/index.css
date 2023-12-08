@@ -4,18 +4,24 @@
 
 @layer components {
   .form {
-    @apply text-lime-50 flex w-[100%]  items-center justify-center flex-col gap-4;
+    @apply text-lime-50 flex w-[50%]    flex-col gap-2;
+  }
+  .form-control{
+    @apply flex flex-col;
   }
   form {
-    @apply border border-white p-4 rounded-xl  flex flex-col gap-4;
+    @apply border border-white p-4 rounded-xl  flex flex-col gap-2;
   }
   label {
     @apply cursor-pointer;
   }
   input {
-    @apply rounded-lg bg-black border border-white text-white p-2;
+    @apply rounded-lg bg-black  outline-none border text-white p-2;
   }
   button {
     @apply bg-pink-700  p-2 rounded-lg;
+  }
+  .errors{
+    @apply text-sm text-red-400 text-center
   }
 }

@@ -3,7 +3,7 @@ import YouTubeForm from "./components/YouTubeForm";
 function App() {
 
   return (
-    <div className="flex justify-center bg-black h-screen"> 
+    <div className="flex items-center justify-center bg-black min-h-screen"> 
     <YouTubeForm/>
     </div>
   );
