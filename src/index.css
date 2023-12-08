@@ -24,4 +24,7 @@
   .errors{
     @apply text-sm text-red-400 text-center
   }
+  .input-error{
+    @apply placeholder:text-red-500 border-red-500
+  }
 }
